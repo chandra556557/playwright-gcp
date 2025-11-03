@@ -1,0 +1,152 @@
+/* Cue Steps (5-step workflow for scripts) */
+.cue-steps {
+  margin-top: 16px;
+  border-top: 1px dashed #e5e7eb;
+  padding-top: 16px;
+}
+
+.cue-steps-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.cue-steps-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1f36;
+  display: block;
+}
+
+.cue-steps-subtitle {
+  font-size: 12px;
+  color: #6b7280;
+  display: block;
+}
+
+.cue-steps-badge {
+  font-size: 12px;
+  color: #374151;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+
+.cue-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 14px;
+}
+.cue-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d1d5db;
+}
+.cue-line {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, #e5e7eb, #f3f4f6);
+}
+
+.cue-dot.generate { background: #3b82f6; }
+.cue-dot.enhance { background: #6366f1; }
+.cue-dot.validate { background: #10b981; }
+.cue-dot.finalize { background: #f59e0b; }
+.cue-dot.insights { background: #8b5cf6; }
+
+.cue-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 1200px) {
+  .cue-steps-grid {
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .cue-steps-grid {
+    grid-template-columns: repeat(1, minmax(220px, 1fr));
+  }
+}
+
+.cue-step-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: box-shadow 0.2s, transform 0.2s;
+  position: relative;
+}
+.cue-step-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  border-radius: 12px 12px 0 0;
+  background: #e5e7eb;
+}
+.cue-step-card.generate::before { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+.cue-step-card.enhance::before { background: linear-gradient(90deg, #6366f1, #818cf8); }
+.cue-step-card.validate::before { background: linear-gradient(90deg, #10b981, #34d399); }
+.cue-step-card.finalize::before { background: linear-gradient(90deg, #f59e0b, #fcd34d); }
+.cue-step-card.insights::before { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+
+.cue-step-card:hover {
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.cue-step-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cue-step-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #111827;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+}
+.cue-step-headings { flex: 1; }
+
+.cue-step-card-content p {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+
+
+.step-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1f36;
+}
+
+.step-desc {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.cue-step-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.step-action {
+  white-space: nowrap;
+}

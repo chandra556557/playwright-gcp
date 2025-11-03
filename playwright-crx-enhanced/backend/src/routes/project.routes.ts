@@ -10,7 +10,10 @@ const router = Router();
 router.get('/', authMiddleware, async (req, res) => {
   try {
     const userId = (req as any).user?.userId;
-    if (!userId) return res.status(401).json({ error: 'Unauthorized' });
+    if (!userId) {
+      res.status(401).json({ error: 'Unauthorized' });
+      return;
+    }
 
     let result;
     try {
@@ -39,12 +42,16 @@ router.get('/', authMiddleware, async (req, res) => {
 router.post('/', authMiddleware, async (req, res) => {
   try {
     const userId = (req as any).user?.userId;
-    if (!userId) return res.status(401).json({ error: 'Unauthorized' });
+    if (!userId) {
+      res.status(401).json({ error: 'Unauthorized' });
+      return;
+    }
 
     const { name, description } = req.body;
 
     if (!name || typeof name !== 'string' || name.trim().length === 0) {
-      return res.status(400).json({ error: 'Project name is required' });
+      res.status(400).json({ error: 'Project name is required' });
+      return;
     }
 
     const id = randomUUID();
@@ -92,7 +99,8 @@ router.get('/:id', authMiddleware, async (req, res) => {
 
     const project = result.rows[0];
     if (!project) {
-      return res.status(404).json({ error: 'Project not found' });
+      res.status(404).json({ error: 'Project not found' });
+      return;
     }
 
     logger.info(`Retrieved project: ${project.id}`);
@@ -125,7 +133,8 @@ router.put('/:id', authMiddleware, async (req, res) => {
 
     const project = result.rows[0];
     if (!project) {
-      return res.status(404).json({ error: 'Project not found' });
+      res.status(404).json({ error: 'Project not found' });
+      return;
     }
 
     logger.info(`Updated project: ${project.id}`);
@@ -156,7 +165,8 @@ router.delete('/:id', authMiddleware, async (req, res) => {
     }
 
     if (!result.rowCount) {
-      return res.status(404).json({ error: 'Project not found' });
+      res.status(404).json({ error: 'Project not found' });
+      return;
     }
 
     logger.info(`Deleted project with id: ${id}`);

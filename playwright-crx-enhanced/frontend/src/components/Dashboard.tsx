@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import ApiTesting from './ApiTesting';
+import ScriptCueCards from './ScriptCueCards';
 import './Dashboard.css';
 
 const API_URL = 'http://localhost:3001/api';
@@ -441,32 +442,70 @@ test('sample login flow', async ({ page }) => {
               <div className="loading-state">Loading scripts...</div>
             ) : scripts.length === 0 ? (
               selectedProjectId ? (
-                <div className="empty-state">
-                  <div className="empty-icon">🔍</div>
-                  <h3>No scripts in "{currentProjectName}"</h3>
-                  <p>Try viewing all projects or record a script in this project.</p>
-                  <button
-                    className="btn-secondary"
-                    onClick={() => setSelectedProjectId(null)}
-                  >
-                    ↩ Show All Projects
-                  </button>
-                </div>
+                <>
+                  <div className="empty-state">
+                    <div className="empty-icon">🔍</div>
+                    <h3>No scripts in "{currentProjectName}"</h3>
+                    <p>Try viewing all projects or record a script in this project.</p>
+                    <button
+                      className="btn-secondary"
+                      onClick={() => setSelectedProjectId(null)}
+                    >
+                      ↩ Show All Projects
+                    </button>
+                  </div>
+
+                  {/* Default workflow when no scripts exist */}
+                  <div className="content-card" style={{ marginTop: 16 }}>
+                    <div className="card-header">
+                      <h3>New Script Workflow</h3>
+                      <span className="language-badge">typescript</span>
+                    </div>
+                    <p className="card-description">Start a script even if none exist yet.</p>
+                    <ScriptCueCards
+                      script={{ id: 'new', name: 'New Script', language: 'typescript' }}
+                      onGenerate={importSampleScript}
+                      onEnhance={() => setActiveView('aihealing')}
+                      onValidate={() => alert('Open review flow coming soon')}
+                      onFinalize={() => setActiveView('runs')}
+                      onInsights={() => setActiveView('analytics')}
+                    />
+                  </div>
+                </>
               ) : (
-                <div className="empty-state">
-                  <div className="empty-icon">📝</div>
-                  <h3>No Scripts Found</h3>
-                  <p>Record some tests using the extension to get started!</p>
-                  <button
-                    className="btn-primary"
-                    onClick={importSampleScript}
-                    disabled={importingSample || loading}
-                    title="Import a starter script"
-                    style={{ marginTop: 8 }}
-                  >
-                    {importingSample ? '⏳ Importing...' : '⬇️ Import Sample Script'}
-                  </button>
-                </div>
+                <>
+                  <div className="empty-state">
+                    <div className="empty-icon">📝</div>
+                    <h3>No Scripts Found</h3>
+                    <p>Record some tests using the extension to get started!</p>
+                    <button
+                      className="btn-primary"
+                      onClick={importSampleScript}
+                      disabled={importingSample || loading}
+                      title="Import a starter script"
+                      style={{ marginTop: 8 }}
+                    >
+                      {importingSample ? '⏳ Importing...' : '⬇️ Import Sample Script'}
+                    </button>
+                  </div>
+
+                  {/* Default workflow when no scripts exist */}
+                  <div className="content-card" style={{ marginTop: 16 }}>
+                    <div className="card-header">
+                      <h3>New Script Workflow</h3>
+                      <span className="language-badge">typescript</span>
+                    </div>
+                    <p className="card-description">Start a script even if none exist yet.</p>
+                    <ScriptCueCards
+                      script={{ id: 'new', name: 'New Script', language: 'typescript' }}
+                      onGenerate={importSampleScript}
+                      onEnhance={() => setActiveView('aihealing')}
+                      onValidate={() => alert('Open review flow coming soon')}
+                      onFinalize={() => setActiveView('runs')}
+                      onInsights={() => setActiveView('analytics')}
+                    />
+                  </div>
+                </>
               )
             ) : (
               (() => {
@@ -509,6 +548,16 @@ test('sample login flow', async ({ page }) => {
                                 )}
                                 <span>📅 {new Date(script.createdAt).toLocaleDateString()}</span>
                               </div>
+
+                              {/* 5-Step Cue Cards */}
+                              <ScriptCueCards
+                                script={{ id: script.id, name: script.name, language: script.language }}
+                                onGenerate={() => alert(`Generate flow for: ${script.name}`)}
+                                onEnhance={() => setActiveView('aihealing')}
+                                onValidate={() => alert(`Open review for: ${script.name}`)}
+                                onFinalize={() => setActiveView('runs')}
+                                onInsights={() => setActiveView('analytics')}
+                              />
                             </div>
                           ))}
                         </div>
